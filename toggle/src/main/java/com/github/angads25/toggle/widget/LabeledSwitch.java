@@ -51,6 +51,7 @@ public class LabeledSwitch extends ToggleableView {
     private int thumbRadii;
 
     private Paint paint;
+    private Paint whitePaint;
 
     private long startTime;
 
@@ -126,6 +127,8 @@ public class LabeledSwitch extends ToggleableView {
 
         paint = new Paint();
         paint.setAntiAlias(true);
+        whitePaint = new Paint();
+        whitePaint.setAntiAlias(true);
 
         leftBgArc = new RectF();
         rightBgArc = new RectF();
@@ -182,6 +185,8 @@ public class LabeledSwitch extends ToggleableView {
         super.onDraw(canvas);
         paint.setTextSize(textSize);
 
+        whitePaint.setTextSize(textSize);
+        whitePaint.setColor(getResources().getColor(android.R.color.white));
 //      Drawing Switch background here
         {
             if(isEnabled()) {
@@ -244,7 +249,7 @@ public class LabeledSwitch extends ToggleableView {
             int maxSize = width - (padding << 1) - (thumbRadii << 1);
 
             centerX = (((padding >>> 1) + maxSize) - padding) >>> 1;
-            canvas.drawText(labelOn, padding + centerX - (paint.measureText(labelOn) / 2), (height >>> 1) + textCenter, paint);
+            canvas.drawText(labelOn, padding + centerX - (paint.measureText(labelOn) / 2), (height >>> 1) + textCenter, whitePaint);
         } else {
             int alpha = (int)(((thumbBounds.centerX() - (width >>> 1)) / (thumbOnCenterX - (width >>> 1))) * 255);
             alpha = (alpha < 0 ? 0 : (alpha > 255 ? 255 : alpha));
@@ -266,7 +271,7 @@ public class LabeledSwitch extends ToggleableView {
             paint.setColor(onColor);
 
             centerX = (width - padding - ((padding + (padding >>> 1)) + (thumbRadii << 1))) >>> 1;
-            canvas.drawText(labelOff, (padding + (padding >>> 1)) + (thumbRadii << 1) + centerX - (paint.measureText(labelOff) / 2), (height >>> 1) + textCenter, paint);
+            canvas.drawText(labelOff, (padding + (padding >>> 1)) + (thumbRadii << 1) + centerX - (paint.measureText(labelOff) / 2), (height >>> 1) + textCenter, whitePaint);
         }
 
 //      Drawing Switch Thumb here
@@ -286,7 +291,7 @@ public class LabeledSwitch extends ToggleableView {
                 onColor = Color.argb(alpha, Color.red(colorDisabled), Color.green(colorDisabled), Color.blue(colorDisabled));
             }
             paint.setColor(onColor);
-            canvas.drawCircle(thumbBounds.centerX(), thumbBounds.centerY(), thumbRadii, paint);
+            canvas.drawCircle(thumbBounds.centerX(), thumbBounds.centerY(), thumbRadii, whitePaint);
         }
     }
 
